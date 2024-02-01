@@ -1,0 +1,123 @@
+[gd_scene load_steps=8 format=3 uid="uid://bo5e7pvmbxvck"]
+
+[ext_resource type="Script" path="res://PickupMelee.gd" id="1_fspgv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7812"]
+albedo_color = Color(0.301961, 1, 0.313726, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_ujub0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bc13o"]
+
+[sub_resource type="Animation" id="Animation_asf3v"]
+resource_name = "rotate"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCombiner3D:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.785398, -0.25, 0, 0.25, 0, 1.5708, -0.25, 0, 0.25, 0, 2.35619, -0.25, 0, 0.25, 0, 3.14159, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2, 3, 4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CSGCombiner3D:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.785398, -0.25, 0, 0.25, 0, 1.5708, -0.25, 0, 0.25, 0, 2.35619, -0.25, 0, 0.25, 0, 3.14159, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2, 3, 4)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CSGCombiner3D:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.785398, -0.25, 0, 0.25, 0, 1.5708, -0.25, 0, 0.25, 0, 2.35619, -0.25, 0, 0.25, 0, 3.14159, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2, 3, 4)
+}
+
+[sub_resource type="Animation" id="Animation_rvngq"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCombiner3D:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CSGCombiner3D:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CSGCombiner3D:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_if1p6"]
+_data = {
+"RESET": SubResource("Animation_rvngq"),
+"rotate": SubResource("Animation_asf3v")
+}
+
+[node name="PickupMelee" type="Node3D"]
+script = ExtResource("1_fspgv")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.6, 0)
+material_override = SubResource("StandardMaterial3D_m7812")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CSGCombiner3D"]
+mesh = SubResource("TorusMesh_ujub0")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("TorusMesh_ujub0")
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("TorusMesh_ujub0")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_bc13o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_if1p6")
+}
+autoplay = "rotate"
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

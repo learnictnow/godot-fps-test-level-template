@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://8uqlh22p4hmx"]
+
+[ext_resource type="Script" path="res://Menus/About.gd" id="1_vxj02"]
+[ext_resource type="StyleBox" uid="uid://b618bvj8mlvfg" path="res://Example/Assets/button_default.tres" id="2_i7jhi"]
+[ext_resource type="Texture2D" uid="uid://jjvn2pc1fb5f" path="res://Example/Assets/images/kiwi.png" id="3_6y8j3"]
+
+[node name="About" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vxj02")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "About this project"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(800, 500)
+layout_mode = 2
+
+[node name="LabelAbout" type="Label" parent="CenterContainer/VBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(800, 500)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "This project is to demonstrate how to build a level.
+
+It has a default first person control scheme with one level built as well as a staging area that links to multiple enpty levels for users to build their level in.
+
+The focus is for contributors to work on level design without having to worry about other game mechanics."
+autowrap_mode = 2
+
+[node name="ButtonBack" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonPlay")
+focus_neighbor_bottom = NodePath("../ButtonQuit")
+focus_next = NodePath("../ButtonQuit")
+focus_previous = NodePath("../ButtonPlay")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/hover = ExtResource("2_i7jhi")
+theme_override_styles/focus = ExtResource("2_i7jhi")
+text = "Back"
+
+[node name="Kiwi" type="Sprite2D" parent="CenterContainer/VBoxContainer/ButtonBack"]
+position = Vector2(-146, 6)
+scale = Vector2(0.469231, 0.469231)
+texture = ExtResource("3_6y8j3")
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonBack" to="." method="_on_button_back_pressed"]

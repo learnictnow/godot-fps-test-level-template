@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://cs52lhk7urrie"]
+
+[ext_resource type="ArrayMesh" uid="uid://bsdqp7nrnefa4" path="res://Example/Assets/kenney_space-kit/Models/OBJ format/rocket_baseA.obj" id="1_yf45y"]
+[ext_resource type="ArrayMesh" uid="uid://bgsvgloemu267" path="res://Example/Assets/kenney_space-kit/Models/OBJ format/rocket_sidesB.obj" id="2_f2out"]
+[ext_resource type="ArrayMesh" uid="uid://bns5vcx27y8jf" path="res://Example/Assets/kenney_space-kit/Models/OBJ format/rocket_topB.obj" id="3_ipf07"]
+[ext_resource type="ArrayMesh" uid="uid://c2qap4l375uma" path="res://Example/Assets/kenney_space-kit/Models/OBJ format/rocket_topA.obj" id="4_3b4nu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_60tyy"]
+radius = 0.2221
+height = 1.15888
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aoob3"]
+size = Vector3(0.15, 1, 0.15)
+
+[node name="MeleeWeapon" type="Node3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="." groups=["Melee"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_60tyy")
+
+[node name="Weapon" type="Node3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.6, 0)
+
+[node name="RocketBaseA" type="MeshInstance3D" parent="Weapon"]
+mesh = ExtResource("1_yf45y")
+skeleton = NodePath("../..")
+
+[node name="RocketSidesB" type="MeshInstance3D" parent="Weapon"]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, -2.3, 0)
+mesh = ExtResource("2_f2out")
+skeleton = NodePath("../..")
+
+[node name="RocketSidesB2" type="MeshInstance3D" parent="Weapon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+mesh = ExtResource("2_f2out")
+skeleton = NodePath("../..")
+
+[node name="RocketTopB" type="MeshInstance3D" parent="Weapon"]
+transform = Transform3D(1, 0, 0, 0, 1.75, 0, 0, 0, 1, 0, 1, 0)
+mesh = ExtResource("3_ipf07")
+skeleton = NodePath("../..")
+
+[node name="RocketTopA" type="MeshInstance3D" parent="Weapon"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, -2.3, 0)
+mesh = ExtResource("4_3b4nu")
+skeleton = NodePath("../..")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("BoxShape3D_aoob3")

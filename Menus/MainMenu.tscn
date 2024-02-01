@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://ebet644ndqk2"]
+
+[ext_resource type="Script" path="res://Menus/MainMenu.gd" id="1_64ifq"]
+[ext_resource type="StyleBox" uid="uid://b618bvj8mlvfg" path="res://Example/Assets/button_default.tres" id="2_ul7i0"]
+[ext_resource type="Texture2D" uid="uid://c4k2qs1o5m2e4" path="res://Example/Assets/images/icon.png" id="3_ks4gn"]
+[ext_resource type="Texture2D" uid="uid://jjvn2pc1fb5f" path="res://Example/Assets/images/kiwi.png" id="4_lsaug"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okfwc"]
+bg_color = Color(1, 1, 1, 1)
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbp8x"]
+bg_color = Color(1, 0, 0, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_64ifq")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.74902, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 150
+text = "Time Warriors"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Godot Group Project"
+horizontal_alignment = 1
+
+[node name="ButtonPlay" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../ButtonAbout")
+focus_next = NodePath("../ButtonAbout")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_okfwc")
+theme_override_styles/hover = ExtResource("2_ul7i0")
+theme_override_styles/focus = ExtResource("2_ul7i0")
+text = "Play"
+
+[node name="ButtonAbout" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonPlay")
+focus_neighbor_bottom = NodePath("../ButtonQuit")
+focus_next = NodePath("../ButtonQuit")
+focus_previous = NodePath("../ButtonPlay")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/hover = ExtResource("2_ul7i0")
+theme_override_styles/focus = ExtResource("2_ul7i0")
+text = "About"
+
+[node name="ButtonQuit" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonAbout")
+focus_next = NodePath("../ButtonPlay")
+focus_previous = NodePath("../ButtonAbout")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_kbp8x")
+theme_override_styles/hover = ExtResource("2_ul7i0")
+theme_override_styles/focus = ExtResource("2_ul7i0")
+text = "Quit"
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(64, 56)
+scale = Vector2(0.261468, 0.261468)
+texture = ExtResource("3_ks4gn")
+
+[node name="Kiwi" type="Sprite2D" parent="."]
+position = Vector2(62, 660)
+scale = Vector2(0.469231, 0.469231)
+texture = ExtResource("4_lsaug")
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonPlay" to="." method="_on_button_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonAbout" to="." method="_on_button_about_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ButtonQuit" to="." method="_on_button_quit_pressed"]

@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=3 uid="uid://cflap0at0xydy"]
+
+[ext_resource type="Script" path="res://Level/level.gd" id="1_o7lpv"]
+[ext_resource type="PackedScene" uid="uid://rxb4kpt81cow" path="res://Player/player.tscn" id="2_6fl4n"]
+[ext_resource type="PackedScene" uid="uid://cpbsrhi3r4fsx" path="res://Level/level_exit.tscn" id="3_x52p5"]
+[ext_resource type="PackedScene" uid="uid://bo5e7pvmbxvck" path="res://Level/PickupMelee.tscn" id="4_2x8u5"]
+[ext_resource type="PackedScene" uid="uid://bhxip00osepyl" path="res://Level/gun_target.tscn" id="5_2bndh"]
+
+[sub_resource type="Curve3D" id="Curve3D_fodli"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.317085, -0.246919, -2.53579, -1.10014, 0.360174, 0.41984, 1.10014, -0.360174, -0.41984, -0.235944, 0.390067, -4.32569, -0.472422, 0.79491, -0.816427, 0.472422, -0.79491, 0.816427, 3.03975, 0.545089, -4.73054, 0, 0, 0, 0, 0, 0, 6.39311, -0.368372, -4.23235),
+"tilts": PackedFloat32Array(0, 0, 0.217239, 0)
+}
+point_count = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_daoxt"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h16up"]
+albedo_color = Color(0.545098, 0, 0, 1)
+roughness = 0.0
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_o7lpv")
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.72002, 0.326346, 3.99477)
+curve = SubResource("Curve3D_fodli")
+
+[node name="Marker3DPlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Marker3DPlayerSpawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+use_collision = true
+radius = 2.5
+height = 0.5
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Marker3DPlayerSpawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.593689, -4.42793, -8.79712)
+use_collision = true
+size = Vector3(2.18738, 1, 18.5942)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Marker3DPlayerSpawn"]
+transform = Transform3D(0.80914, -0.587616, 0, 0.587616, 0.80914, 0, 0, 0, 1, 2.17354, -4.00106, -8.79712)
+use_collision = true
+size = Vector3(2.18738, 1, 18.5942)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Marker3DPlayerSpawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68167, -2.97159, -7.2981)
+use_collision = true
+radius = 2.40232
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Marker3DPlayerSpawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19895, -4.18467, -3.35719)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0.382814, 0.64106, 0.926303, 0.669088, 1.33784, 0.981656, 1.65485, 0.466817, 1, 0, 0.580101, 0.258766, 0.323676, 0.016762)
+mode = 2
+path_node = NodePath("../../Path3D")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Player" parent="." node_paths=PackedStringArray("start_Marker3D") instance=ExtResource("2_6fl4n")]
+start_Marker3D = NodePath("../Marker3DPlayerSpawn")
+game_end_time = 10
+
+[node name="DeathPit" type="CSGMesh3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -25, 0)
+mesh = SubResource("PlaneMesh_daoxt")
+material = SubResource("StandardMaterial3D_h16up")
+
+[node name="Area3D" type="Area3D" parent="DeathPit"]
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="DeathPit/Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -50, 0, -50)
+polygon = PackedVector2Array(0, 0, 0, 100, 100, 100, 100, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="LevelExit" parent="." instance=ExtResource("3_x52p5")]
+transform = Transform3D(0.396523, 0, 0.918025, 0, 1, 0, -0.918025, 0, 0.396523, -6.67384, -0.771372, -3.28981)
+
+[node name="PickupMelee" parent="." instance=ExtResource("4_2x8u5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.397982, -1.84006, -12.5455)
+
+[node name="PickupMelee2" parent="." instance=ExtResource("4_2x8u5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.397982, -1.84006, -4.10151)
+
+[node name="GunTarget" parent="." instance=ExtResource("5_2bndh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33755, 0, -2.68019)
+
+[node name="GunTarget2" parent="." instance=ExtResource("5_2bndh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.50262, 0, -3.33994)
+
+[connection signal="body_entered" from="DeathPit/Area3D" to="." method="_on_area_3d_body_entered"]

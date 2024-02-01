@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://rxb4kpt81cow"]
+
+[ext_resource type="Script" path="res://Example/Player/Player.gd" id="1_0cdj8"]
+[ext_resource type="ArrayMesh" uid="uid://cxtowtulcrxd5" path="res://Example/Assets/kenney_space-kit/Models/OBJ format/astronautA.obj" id="2_36vwb"]
+[ext_resource type="ArrayMesh" uid="uid://c3ji71ymbpik8" path="res://Example/Assets/kenney_space-kit/Models/OBJ format/weapon_gun.obj" id="2_fy21p"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g8xao"]
+radius = 0.25
+height = 1.0
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+script = ExtResource("1_0cdj8")
+default_speed = null
+running_speed_multiplier = null
+jump_velocity = null
+mouse_sensitivity = null
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_g8xao")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+cull_mask = 1048063
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D"]
+light_energy = 5.0
+spot_angle = 15.0
+
+[node name="Marker3D" type="Marker3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0)
+
+[node name="LeftWeapon" type="MeshInstance3D" parent="Camera3D/Marker3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.3, -0.3)
+mesh = ExtResource("2_fy21p")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+layers = 512
+mesh = ExtResource("2_36vwb")
+
+[node name="PlayerHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelTimer" type="Label" parent="PlayerHUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_right = 48.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "Timer: X"
+horizontal_alignment = 1
+
+[node name="LabelDeaths" type="Label" parent="PlayerHUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 48
+text = "Deaths: X"
+
+[node name="LabelAmmo" type="Label" parent="PlayerHUD"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -34.0
+offset_right = 105.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 48
+text = "Ammo: X"

@@ -1,0 +1,233 @@
+[gd_scene load_steps=13 format=3 uid="uid://rxb4kpt81cow"]
+
+[ext_resource type="Script" path="res://Example/Player/Player.gd" id="1_0cdj8"]
+[ext_resource type="ArrayMesh" uid="uid://cxtowtulcrxd5" path="res://Example/Assets/kenney_space-kit/Models/OBJ format/astronautA.obj" id="2_36vwb"]
+[ext_resource type="ArrayMesh" uid="uid://c3ji71ymbpik8" path="res://Example/Assets/kenney_space-kit/Models/OBJ format/weapon_gun.obj" id="2_fy21p"]
+[ext_resource type="AudioStream" uid="uid://cxbhvmqs2ejyt" path="res://Example/Assets/audio/primary_fire.mp3" id="3_p6u1c"]
+[ext_resource type="Texture2D" uid="uid://dres3h2b7qami" path="res://Example/Assets/images/crosshair099.png" id="4_cp7s3"]
+[ext_resource type="AudioStream" uid="uid://dr7iecvxtkler" path="res://Example/Assets/audio/primary_empty.mp3" id="4_fqhi6"]
+[ext_resource type="AudioStream" uid="uid://drk5vfo2abc2n" path="res://Example/Assets/audio/secondary_whack.mp3" id="5_lvi5q"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g8xao"]
+radius = 0.25
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3h3r"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.623529)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_50vur"]
+resource_name = "fire_primary"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Marker3D/CSGSphere3D:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_r3h3r")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Marker3D/CSGSphere3D:material:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Marker3D/CSGSphere3D:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 0.623529), Color(1, 0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Marker3D/CSGSphere3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ia4ig"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Marker3D/CSGSphere3D:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("StandardMaterial3D_r3h3r")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Marker3D/CSGSphere3D:material:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Marker3D/CSGSphere3D:material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.623529)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Marker3D/CSGSphere3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fsr3y"]
+_data = {
+"RESET": SubResource("Animation_ia4ig"),
+"fire_primary": SubResource("Animation_50vur")
+}
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+script = ExtResource("1_0cdj8")
+default_speed = null
+running_speed_multiplier = null
+jump_velocity = null
+mouse_sensitivity = null
+game_end_time = null
+player_ammo = null
+ray_length = null
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_g8xao")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+cull_mask = 1048063
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D"]
+light_energy = 5.0
+spot_angle = 15.0
+
+[node name="Marker3D" type="Marker3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0)
+
+[node name="LeftWeapon" type="MeshInstance3D" parent="Camera3D/Marker3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.3, -0.3)
+mesh = ExtResource("2_fy21p")
+
+[node name="Marker3D" type="Marker3D" parent="Camera3D/Marker3D/LeftWeapon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.49012e-08, 0.1, 0.246199)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Camera3D/Marker3D/LeftWeapon/Marker3D"]
+visible = false
+radius = 0.1
+radial_segments = 8
+rings = 5
+material = SubResource("StandardMaterial3D_r3h3r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/Marker3D/LeftWeapon"]
+libraries = {
+"": SubResource("AnimationLibrary_fsr3y")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Camera3D/Marker3D/LeftWeapon"]
+stream = ExtResource("3_p6u1c")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Camera3D/Marker3D/LeftWeapon"]
+stream = ExtResource("4_fqhi6")
+
+[node name="Marker3DRight" type="Marker3D" parent="Camera3D"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Camera3D/Marker3DRight"]
+stream = ExtResource("5_lvi5q")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+layers = 512
+mesh = ExtResource("2_36vwb")
+
+[node name="PlayerHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelTimer" type="Label" parent="PlayerHUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_right = 48.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 96
+text = "00:00"
+horizontal_alignment = 1
+
+[node name="LabelDeaths" type="Label" parent="PlayerHUD"]
+layout_mode = 0
+offset_right = 218.0
+offset_bottom = 67.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = " Deaths: X"
+
+[node name="LabelAmmo" type="Label" parent="PlayerHUD"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -34.0
+offset_right = 105.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 48
+text = " Ammo: X"
+
+[node name="Crosshair099" type="Sprite2D" parent="PlayerHUD"]
+modulate = Color(1, 1, 1, 0.501961)
+position = Vector2(656, 362)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_cp7s3")
