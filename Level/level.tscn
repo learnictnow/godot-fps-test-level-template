@@ -99,4 +99,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33755, 0, -2.68019)
 [node name="GunTarget2" parent="." instance=ExtResource("5_2bndh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.50262, 0, -3.33994)
 
+[node name="CSGTorus3D" type="CSGTorus3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.324233, -1.96554, -3.89957)
+use_collision = true
+inner_radius = 0.905151
+outer_radius = 3.02307
+sides = 64
+ring_sides = 3
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.20099, 0, -3.37402)
+size = Vector3(1, 1, 7.74805)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.300889, 0, -0.953659, 0, 1, 0, 0.953659, 0, 0.300889, 2.64491, 0.698608, -5.57988)
+size = Vector3(1, 1, 7.74805)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.4534)
+polygon = PackedVector2Array(0, 0, 0, 1, 0.480676, 1.62735, 1, 1, 1.63631, 0.368401, 0.584697, 0.654275, 1, 0, 0.470907, -0.524632)
+
 [connection signal="body_entered" from="DeathPit/Area3D" to="." method="_on_area_3d_body_entered"]
