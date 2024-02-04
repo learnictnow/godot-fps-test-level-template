@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cflap0at0xydy"]
+[gd_scene load_steps=12 format=3 uid="uid://cflap0at0xydy"]
 
 [ext_resource type="Script" path="res://Level/level.gd" id="1_o7lpv"]
 [ext_resource type="PackedScene" uid="uid://rxb4kpt81cow" path="res://Player/player.tscn" id="2_6fl4n"]
@@ -19,6 +19,92 @@ size = Vector2(100, 100)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h16up"]
 albedo_color = Color(0.545098, 0, 0, 1)
 roughness = 0.0
+
+[sub_resource type="Animation" id="Animation_j8bok"]
+resource_name = "move_bar"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGBox3D2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(2.64491, 0.698608, -5.57988), Vector3(2.64491, 1.91113, -5.57988), Vector3(2.64491, 0.698608, -5.57988)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CSGBox3D2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -1.26517, 0), Vector3(0.976913, -1.00309, 0.48622), Vector3(0, -1.26517, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CSGBox3D2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(2, 2, 2), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qq1ny"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGBox3D2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.64491, 0.698608, -5.57988)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CSGBox3D2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -1.26517, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CSGBox3D2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_unr07"]
+_data = {
+"RESET": SubResource("Animation_qq1ny"),
+"move_bar": SubResource("Animation_j8bok")
+}
 
 [node name="Level" type="Node3D"]
 script = ExtResource("1_o7lpv")
@@ -67,6 +153,7 @@ path_u_distance = 1.0
 path_joined = false
 
 [node name="Player" parent="." node_paths=PackedStringArray("start_Marker3D") instance=ExtResource("2_6fl4n")]
+jump_velocity = 10.0
 start_Marker3D = NodePath("../Marker3DPlayerSpawn")
 game_end_time = 10
 
@@ -118,5 +205,11 @@ size = Vector3(1, 1, 7.74805)
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.4534)
 polygon = PackedVector2Array(0, 0, 0, 1, 0.480676, 1.62735, 1, 1, 1.63631, 0.368401, 0.584697, 0.654275, 1, 0, 0.470907, -0.524632)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_unr07")
+}
+autoplay = "move_bar"
 
 [connection signal="body_entered" from="DeathPit/Area3D" to="." method="_on_area_3d_body_entered"]
